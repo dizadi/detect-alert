@@ -20,10 +20,9 @@ class EmailAlerter:
     def send_alert(
         self,
         info,
-        cam_name,
         image_path,
     ):
-        message = self.build_email(info, cam_name, image_path)
+        message = self.build_email(info, image_path)
         try:
             self.send_email(message)
         except:
@@ -32,7 +31,7 @@ class EmailAlerter:
     def build_email(
         self,
         info,
-        attachments
+        attachments,
     ):
         local_time_obj = time.localtime()
         time_string = time.asctime(local_time_obj)
@@ -49,8 +48,8 @@ class EmailAlerter:
         message,
     ):
         for person in self._distribution_list:
-            r = message.send(to=person, smtp={'host': 'aspmx.l.google.com', 'timeout': 5})
-            assert r.status_code == 250
+            r = message.send(to=person, smtp={'host': 'localhost', 'timeout': 5})
+            assert r.status_code == 250, f'Failed to send email to {person}'
 
 
 if __name__=="__main__":

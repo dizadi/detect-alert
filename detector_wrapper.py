@@ -14,7 +14,7 @@ class DetectorWrapper:
         self,
         weights_path='yolov5/yolov5s.pt',
         imgsz=(640,640),
-        classes=None,  # filter by class: --class 0, or --class 0 2 3
+        classes=[0],  # filter by class: --class 0, or --class 0 2 3
         conf_thres=0.4,
         iou_thres=0.25,
         max_det=500,

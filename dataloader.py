@@ -30,7 +30,7 @@ class StreamLoader:
         self.cap = cap
         #self.update(cap, self.source)
         self.thread = Thread(target=self.update, args=([self.cap, self.source]), daemon=True)
-        self.thread.start()
+        #self.thread.start()
         # check for common shapes
         s = np.stack([letterbox(self.img, img_size, stride=stride, auto=auto)[0].shape])
         self.rect = np.unique(s, axis=0).shape[0] == 1  # rect inference if all shapes equal
@@ -39,7 +39,6 @@ class StreamLoader:
 
     def update(self, cap, stream):
         # Read stream `i` frames in daemon thread
-        print("UPDATING THREAD")
         n, f = 0, self.frame # frame number, frame array
         while cap.isOpened() and n < f:
             n += 1
@@ -50,7 +49,6 @@ class StreamLoader:
                 self.img = np.zeros_like(self.img)
                 cap.open(stream)  # re-open stream if signal was lost
             time.sleep(0.0)  # wait time
-        print("CAP NOT OPENED")
 
     def __iter__(self):
         self.count = -1
